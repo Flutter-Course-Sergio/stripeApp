@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../data/cards.dart';
+import '../helpers/helpers.dart';
 import '../widgets/total_pay_button.dart';
+import 'pages.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -15,6 +18,7 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Pagar'),
           actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.add))],
+          leading: const Icon(FontAwesomeIcons.sackDollar),
         ),
         body: Stack(
           children: [
@@ -29,20 +33,26 @@ class HomePage extends StatelessWidget {
                 itemBuilder: (_, i) {
                   final card = cards[i];
 
-                  return CreditCardWidget(
-                      cardNumber: card.cardNumberHidden,
-                      expiryDate: card.expiracyDate,
-                      cardHolderName: card.cardHolderName,
-                      cvvCode: card.cvv,
-                      showBackView: false,
-                      isSwipeGestureEnabled: false,
-                      onCreditCardWidgetChange: (CreditCardBrand brand) {});
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, navigateFadeIn(context, CardPage(card: card,)));
+                    },
+                    child: Hero(
+                      tag: card.cardNumber,
+                      child: CreditCardWidget(
+                          cardNumber: card.cardNumberHidden,
+                          expiryDate: card.expiracyDate,
+                          cardHolderName: card.cardHolderName,
+                          cvvCode: card.cvv,
+                          showBackView: false,
+                          isSwipeGestureEnabled: false,
+                          onCreditCardWidgetChange: (CreditCardBrand brand) {}),
+                    ),
+                  );
                 },
               ),
             ),
-            Positioned(
-              bottom: 0,
-              child: TotalPayButton())
+            const Positioned(bottom: 0, child: TotalPayButton())
           ],
         ));
   }

@@ -42,7 +42,7 @@ class TotalPayButton extends StatelessWidget {
 class _BtnPay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return !true ? buildCardButton(context) : buildAppleAndGooglePay(context);
+    return true ? buildCardButton(context) : buildAppleAndGooglePay(context);
   }
 
   Widget buildCardButton(BuildContext context) {
