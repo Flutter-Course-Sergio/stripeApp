@@ -1,9 +1,5 @@
 part of 'helpers.dart';
 
-
-
-
-
 Route navigateFadeIn(BuildContext context, Widget page) {
   return PageRouteBuilder(
       pageBuilder: (_, __, ___) => page,

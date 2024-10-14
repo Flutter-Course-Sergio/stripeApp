@@ -17,7 +17,17 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Pagar'),
-          actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.add))],
+          actions: [
+            IconButton(
+                onPressed: () async {
+                  // showLoading(context);
+                  // await Future.delayed(const Duration(seconds: 1));
+                  // if (context.mounted) Navigator.pop(context);
+
+                  showAlert(context, 'Hola', 'Mundo');
+                },
+                icon: const Icon(Icons.add))
+          ],
           leading: const Icon(FontAwesomeIcons.sackDollar),
         ),
         body: Stack(
@@ -35,7 +45,13 @@ class HomePage extends StatelessWidget {
 
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(context, navigateFadeIn(context, CardPage(card: card,)));
+                      Navigator.push(
+                          context,
+                          navigateFadeIn(
+                              context,
+                              CardPage(
+                                card: card,
+                              )));
                     },
                     child: Hero(
                       tag: card.cardNumber,
