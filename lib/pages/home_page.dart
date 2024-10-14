@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../bloc/payment/payment_bloc.dart';
 import '../data/cards.dart';
 import '../helpers/helpers.dart';
 import '../widgets/total_pay_button.dart';
@@ -45,13 +47,11 @@ class HomePage extends StatelessWidget {
 
                   return GestureDetector(
                     onTap: () {
+                      BlocProvider.of<PaymentBloc>(context)
+                          .add(OnSelectedCard(card));
+
                       Navigator.push(
-                          context,
-                          navigateFadeIn(
-                              context,
-                              CardPage(
-                                card: card,
-                              )));
+                          context, navigateFadeIn(context, const CardPage()));
                     },
                     child: Hero(
                       tag: card.cardNumber,
