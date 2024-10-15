@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/payment/payment_bloc.dart';
+import 'config/config.dart';
 import 'pages/pages.dart';
 
-void main() {
+void main() async {
+  await Environment.initEnvironment();
   runApp(const MainApp());
 }
 
