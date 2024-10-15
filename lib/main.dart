@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/payment/payment_bloc.dart';
 import 'config/config.dart';
 import 'pages/pages.dart';
+import 'services/stripe_service.dart';
 
 void main() async {
   await Environment.initEnvironment();
+  StripeService.instance.init();
   runApp(const MainApp());
 }
 
