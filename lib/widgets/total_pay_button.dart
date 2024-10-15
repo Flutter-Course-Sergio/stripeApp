@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../bloc/payment/payment_bloc.dart';
+import '../services/stripe_service.dart';
 
 class TotalPayButton extends StatelessWidget {
   const TotalPayButton({super.key});
@@ -39,7 +40,7 @@ class TotalPayButton extends StatelessWidget {
                       style: const TextStyle(fontSize: 20))
                 ],
               ),
-              _BtnPay(isCardActive: state.activeCard)
+              _BtnPay(paymentState: state)
             ],
           ),
         );
@@ -49,13 +50,13 @@ class TotalPayButton extends StatelessWidget {
 }
 
 class _BtnPay extends StatelessWidget {
-  final bool isCardActive;
+  final PaymentState paymentState;
 
-  const _BtnPay({required this.isCardActive});
+  const _BtnPay({required this.paymentState});
 
   @override
   Widget build(BuildContext context) {
-    return isCardActive
+    return paymentState.activeCard
         ? buildCardButton(context)
         : buildAppleAndGooglePay(context);
   }
@@ -74,7 +75,12 @@ class _BtnPay extends StatelessWidget {
           Text('Pagar', style: TextStyle(color: Colors.white, fontSize: 22)),
         ],
       ),
-      onPressed: () {},
+      onPressed: () async {
+        await StripeService.instance.payWithExistingCard(
+            paymentState.paymentAmount,
+            paymentState.currency,
+            paymentState.card!);
+      },
     );
   }
 
@@ -97,7 +103,13 @@ class _BtnPay extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 22)),
         ],
       ),
-      onPressed: () {},
+      onPressed: () async {
+        Platform.isAndroid
+            ? await StripeService.instance.payWithGooglePay(
+                paymentState.paymentAmount, paymentState.currency)
+            : await StripeService.instance.payWithApplePay(paymentState.paymentAmount,
+            paymentState.currency);
+      },
     );
   }
 }

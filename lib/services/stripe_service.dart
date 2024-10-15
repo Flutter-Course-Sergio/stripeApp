@@ -3,6 +3,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 
 import '../config/config.dart';
 import '../models/create_payment_intent_response.dart';
+import '../models/custom_credit_card.dart';
 
 class StripeService {
   StripeService._();
@@ -26,6 +27,19 @@ class StripeService {
             merchantDisplayName: 'Sergio Barreras'));
 
     await _processPayment();
+  }
+
+  Future<void> payWithGooglePay(double amount, String currency) async {
+    throw Exception('Not implemented');
+  }
+
+  Future<void> payWithExistingCard(
+      double amount, String currency, CustomCreditCard card) async {
+    throw Exception('Not implemented');
+  }
+
+  Future<void> payWithApplePay(double amount, String currency) async {
+    throw Exception('Not implemented');
   }
 
   Future<String?> _createPaymentIntent(double amount, String currency) async {
